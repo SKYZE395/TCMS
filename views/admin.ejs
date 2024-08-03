@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN:Manipal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" integrity="sha384-tKLJeE1ALTUwtXlaGjJYM3sejfssWdAaWR2s97axw4xkiAdMzQjtOjgcyw0Y50KU" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/admin.css">
+</head>
+<body>
+    <header class="tt">
+        <a class="logo">Teacher's Desk</a>
+        <img class="tt_logo2" src = "/assets/manipal_logo.png" alt="manipal_logo"></img>
+        <div class="toggle">
+        </div>
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/home/time_table">Time Table</a></li>
+                <li><a href="/Prefrences">Prefrences</a></li>
+                <li><a href="/Notes">Notes</a></li>
+                <li><a href="/Attainment">Attainment</a></li>
+                <li><a href="/">Logout</a></li> 
+            </ul>
+    </header>
+    <br><br><br>
+    <br>
+    <br>
+    <div class="faculty">
+        Faculty MODIFY
+        <h3>Faculty name<input type="text" id="facname">
+            short form<input type="text" id="facshort">Email<input type="text" id="facemail">EID<input type="text"
+                id="facid"><button type="submit" id="addfac">ADD</button><label id="lab1"></h3><br>
+        <h3>Name<select id="sel1"></select>Email<select id="sel2"></select><button type="submit"
+                id="del1">DELETE</button><label id="lab2"></label></h3>
+        <br>
+        <h3>Room no:<input type="text" id="roomno"><button id="addroom">ADD</button><label id="lab3"></label> <br>
+            Room no:<select id="roms"></select><button id="del2">DELETE</button><label id="lab4"></label></h3><br>
+        <h3>LAB no:<input type="text" id="labinput"><button onclick="addlab()">ADD</button><label id="labmsg"></label>     .     <select id="labdeldd" ></select><button id="labdelbut" onclick="dellab()">DELETE</button><label id="labdelmsg"></label></h3><br>
+        Subject MODIFY
+        <h3>Select branch<select id ="selectbranch" name="selectbranch"></select>name<input type="text" id="subname" name="subname">credits<input type="text" id="subcreds" name="subcreds">time_units<input type="text" name="time_units" id="time_units">subject code<input type="text" name="subcode" id="subcode">value<input type="text" id="subval">batch<input type="text" id="batch"><button onclick="addsub()">ADD</button><label id="addsub"></label></h3>
+        <h3>Select branch<select id ="selectbranchdel"></select>select subject name<select id="subdel"></select><button onclick="delsub()">DELETE</button><label id="delsub"></label></h3><br>
+        CLASS MODIFY
+        <h3>ENTER BRANCH<select id="b"><option value="it">IT</option><option value="cce">CCE</option></select>SECTION<input id="s">semester<select id="sem"><option value="iv">4</option><option value="vi">6</option></select><button onclick="addclass()">ADD</button><label id="addclassmsg"></label></h3>
+        <h3>SELECT CLASS<select id="class"></select><button onclick="delclass()">DELETE</button><label id="classmsg"></label></h3>
+        <br>
+        <br>
+        <button><a href="/facload">CHECK FACULTY LOAD</a></button>
+        <br>
+        <br>
+        <button><a href="/labfreedisp">CHECK LAB OCCUPANCY</a></button>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const branch = document.getElementById("selectbranch"); 
+        const name = document.getElementById("subname");
+        const creds = document.getElementById("subcreds");   
+        const code = document.getElementById("subcode");
+        const time_units = document.getElementById("time_units");
+        const batch = document.getElementById("batch");
+        const addsublabel = document.getElementById("addsub");
+        const branchdropdel = document.getElementById("selectbranchdel");
+        const subdel1 = document.getElementById("subdel");
+        const delsublabel = document.getElementById("delsub");
+        const subval = document.getElementById("subval");
+        const inputlab = document.getElementById("labinput");
+        const lablabel = document.getElementById("labmsg");
+        const labdellabel = document.getElementById("labdelmsg");
+        const labdeldd = document.getElementById("labdeldd");
+        const labdelmsg = document.getElementById("labdelmsg");
+        const classmsg = document.getElementById("classmsg");
+        const addclassmsg = document.getElementById("addclassmsg");
+
+        const classdd = document.getElementById("class");
+
+        var disabledOption = document.createElement('option');
+        disabledOption.value = '';
+        disabledOption.selected = true;
+        disabledOption.setAttribute('disabled', 'disabled');
+        disabledOption.text = 'SECTION';
+
+        var disabledOption1 = document.createElement('option');
+        disabledOption1.value = '';
+        disabledOption1.selected = true;
+        disabledOption1.setAttribute('disabled', 'disabled');
+        disabledOption1.text = 'SECTION';
+
+        var disabledOption2 = document.createElement('option');
+        disabledOption2.value = '';
+        disabledOption2.selected = true;
+        disabledOption2.setAttribute('disabled', 'disabled');
+        disabledOption2.text = 'SUBJECT';
+
+        var disabledOption3 = document.createElement('option');
+        disabledOption3.value = '';
+        disabledOption3.selected = true;
+        disabledOption3.setAttribute('disabled', 'disabled');
+        disabledOption3.text = 'LAB';
+
+        var disabledOption4 = document.createElement('option');
+        disabledOption4.value = '';
+        disabledOption4.selected = true;
+        disabledOption4.setAttribute('disabled', 'disabled');
+        disabledOption4.text = 'SECTION';
+
+
+        branch.appendChild(disabledOption);
+        branchdropdel.appendChild(disabledOption1);
+        subdel1.appendChild(disabledOption2);
+        labdeldd.appendChild(disabledOption3);
+        classdd.appendChild(disabledOption4);
+
+
+        axios.get('/sec',{
+
+        })
+            .then(response => {
+                const options = response.data;
+                options.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.TABLE_NAME;
+                    optionElement.text = option.TABLE_NAME;
+                    branch.appendChild(optionElement);
+                });
+                options.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.TABLE_NAME;
+                    optionElement.text = option.TABLE_NAME;
+                    branchdropdel.appendChild(optionElement);
+                });
+                options.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.TABLE_NAME;
+                    optionElement.text = option.TABLE_NAME;
+                    classdd.appendChild(optionElement);
+                });
+            })
+            .catch(error=>{
+                console.error('Error: ', error);
+            })
+        function addsub(){
+            if(branch.options[branch.selectedIndex].value!=''){
+                if(name.value!=''){
+                    if(creds.value=''){
+                        if(code.value!=''){
+                            if(time_units!=''){
+                                if(subval!=''){
+                                    if(batch.value!=''){
+                                        axios.get('/addsub',{
+                                            params:{
+                                                branch:branch.options[branch.selectedIndex].value,
+                                                name:name.value,
+                                                creds:creds.value,
+                                                code:code.value,
+                                                time_units:time_units.value,
+                                                value:subval.value,
+                                                batch:batch.value
+                                            }
+                                        })
+                                            .then(response=>{
+                                                addsublabel.innerHTML = "SUBJECT ADDED";
+                                            })
+                                            .catch(error=>{
+                                                addsublabel.innerHTML = "ERROR";
+                                                console.error('Error: ', error);
+                                            })
+                                    }
+                                    else{
+                                        addsublabel.innerHTML = "DO NOT FIELDS BLANK";
+                                    }
+                                }
+                                else{
+                                    addsublabel.innerHTML = "DO NOT FIELDS BLANK";
+                                }
+                            }
+                            else{
+                                addsublabel.innerHTML = "DO NOT FIELDS BLANK";
+                            }        
+                        }
+                        else{
+                            addsublabel.innerHTML = "DO NOT FIELDS BLANK";
+                        }   
+                    }
+                    else{
+                        addsublabel.innerHTML = "DO NOT FIELDS BLANK";
+                    }
+                }
+                else{
+                    addsublabel.innerHTML = "DO NOT FIELDS BLANK";
+                }
+            }
+            else{
+                addsublabel.innerHTML = "DO NOT FIELDS BLANK";
+            }
+        }
+        axios.get('/dellabavail',{
+
+        })
+            .then(response=>{
+                const options = response.data;
+                options.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option.room;
+                    optionElement.text = option.room;
+                    labdeldd.appendChild(optionElement);
+                });
+            })
+            .catch(error=>{
+                labdellabel.innerHTML = "ERROR";
+                console.error('Error: ', error);
+            })
+        branchdropdel.addEventListener('change',()=>{
+            axios.get('/delsubfetch',{
+                params:{
+                    branch:branchdropdel.options[branchdropdel.selectedIndex].value
+                }
+            })
+                .then(response => {
+                    subdel.innerHTML='';
+                    const options = response.data;
+                    options.forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option.value;
+                        optionElement.text = option.subject_name;
+                        subdel.appendChild(optionElement);
+                    });
+                })
+                .catch(error=>{
+                    delsublabel.innerHTML = "ERROR";
+                    console.error('Error: ', error);
+                })
+        })
+
+        function delsub(){
+            if(branchdropdel.options[branchdropdel.selectedIndex].value!=''){
+                if(subdel1.options[subdel1.selectedIndex].text!=''){
+                    axios.get('/delsub',{
+                        params:{
+                            branch:branchdropdel.options[branchdropdel.selectedIndex].value,
+                            name:subdel1.options[subdel1.selectedIndex].text
+                        }
+                    })
+                        .then(response=>{
+                                delsublabel.innerHTML = "SUBJECT DELETED";
+                            })
+                        .catch(error=>{
+                            delsublabel.innerHTML = "ERROR";
+                            console.error('Error: ', error);
+                        })
+                }
+                else{
+                    delsublabel.innerHTML = "DO NOT LEAVE FIELDS BLANK";
+                }
+            }
+            else{
+                delsublabel.innerHTML = "DO NOT LEAVE FIELDS BLANK";
+            }
+        }
+
+        function dellab(){
+            if(labdeldd.options[labdeldd.selectedIndex].value!=''){
+                axios.get('/dellab',{
+                    params:{
+                        lab:labdeldd.options[labdeldd.selectedIndex].text
+                    }
+                })
+                    .then(response=>{
+                        labdelmsg.innerHTML = "LAB DELETED";
+                    })
+                    .catch(error=>{
+                        labdelmsg.innerHTML = "ERROR";
+                        console.error('Error :',error);
+                    })
+            }
+            else{
+                labdelmsg.innerHTML = "DO NOT LEAVE FIELDS BLANK";
+            }
+        }
+
+
+        function addlab(){
+            if(inputlab.value!=''){
+                axios.get('/addlab',{
+                    params:{
+                        lab:inputlab.value
+                    }
+                })
+                    .then(response=>{
+                        lablabel.innerHTML = "LAB ADDED";
+                    })
+                    .catch(error=>{
+                        lablabel.innerHTML = "ERROR";
+                        console.error('Error: ', error);
+                    })
+            }
+            else{
+                lablabel.innerHTML = "DO NOT FIELDS BLANK";
+            }
+        }
+        function delclass(){
+            if(classdd.options[classdd.selectedIndex].value){
+                axios.get('/delclass',{
+                    params:{
+                        class1:classdd.options[classdd.selectedIndex].text
+                    }
+                })
+                    .then(response=>{
+                        classmsg.innerHTML = "CLASS DELETED";
+                    })
+                    .catch(error=>{
+                        classmsg.innerHTML = "ERROR";
+                        console.error('Error :',error);
+                    })
+            }
+            else{
+                classmsg.innerHTML = "DO NOT LEAVE FIELDS BLANK";
+            }
+        }
+        const b = document.getElementById("b");
+        const s = document.getElementById("s");
+        const sem = document.getElementById("sem");
+        function addclass(){
+            if(b.options[b.selectedIndex].value){
+                if(s.value){
+                    if(sem.options[sem.selectedIndex].value){
+                        axios.get('/addclass',{
+                            params:{
+                                b:b.options[b.selectedIndex].value,
+                                s:s.value,
+                                sem:sem.options[sem.selectedIndex].value
+                            }
+                        })
+                            .then(response=>{
+                                addclassmsg.innerHTML = "CLASS ADDED";
+                            })
+                            .catch(error=>{
+                                addclassmsg.innerHTML = "ERROR";
+                                console.error('Error :',error);
+                            })
+                    }
+                    else{
+                        addclassmsg.innerHTML = "DO NOT LEAVE FIELDS BLANK";   
+                    }
+                }
+                else{
+                    addclassmsg.innerHTML = "DO NOT LEAVE FIELDS BLANK";   
+                }
+            }
+            else{
+                addclassmsg.innerHTML = "DO NOT LEAVE FIELDS BLANK";   
+            }
+        }
+
+        const fn = document.getElementById('facname');
+        const fs = document.getElementById('facshort');
+        const em = document.getElementById('facemail');
+        const id = document.getElementById('facid');
+        const r1 = document.getElementById('addfac');
+
+        const sel1 = document.getElementById('sel1');
+        const sel2 = document.getElementById('sel2');
+
+        const del1 = document.getElementById('del1');
+
+        const roomno = document.getElementById('roomno');
+        const a2 = document.getElementById('addroom');
+
+        const roms = document.getElementById('roms');
+        const del2 = document.getElementById('del2');
+
+        r1.addEventListener('click', () => {
+            const name = fn.value;
+            const short = fs.value;
+            const email = em.value;
+            const fid = id.value;
+            axios.get('/add', {
+                params: {
+                    name: name,
+                    short: short,
+                    email: email,
+                    fid: fid
+                }
+            })
+                .then(response => {
+                    const options = response.data;
+                    document.getElementById('lab1').innerHTML = options.result1;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+        a2.addEventListener('click', () => {
+            const room = roomno.value;
+            axios.get('/addroom', {
+                params: {
+                    room: room,
+                }
+            })
+                .then(response => {
+                    const options = response.data;
+                    document.getElementById('lab3').innerHTML = options.result1;
+                })
+                .catch(error => {
+                    document.getElementById('lab3').innerHTML = options.result1;
+                    console.error('Error:', error);
+                });
+        });
+
+        var disabledOptionrom = document.createElement('option');
+        disabledOptionrom.value = '';
+        disabledOptionrom.selected = true;
+        disabledOptionrom.setAttribute('disabled', 'disabled');
+        disabledOptionrom.text = 'rooms';
+
+        axios.get('/roms', {
+
+        })
+            .then(response => {
+                const options = response.data;
+                roms.innerHTML = '';
+                roms.appendChild(disabledOptionrom);
+                options.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.text = option.room;
+                    roms.appendChild(optionElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error :', error);
+            })
+        del2.addEventListener('click', () => {
+            const room1 = roms.options[roms.selectedIndex].text;
+            axios.get('/delrom', {
+                params: {
+                    room1: room1,
+                }
+            })
+                .then(response => {
+                    const options = response.data;
+                    document.getElementById('lab4').innerHTML = options.result1;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+        var disabledOptionsel = document.createElement('option');
+        disabledOptionsel.value = '';
+        disabledOptionsel.selected = true;
+        disabledOptionsel.setAttribute('disabled', 'disabled');
+        disabledOptionsel.text = 'Teachers';
+
+        axios.get('/faclist', {
+
+        })
+            .then(response => {
+                const options = response.data;
+                sel1.innerHTML = '';
+                sel1.appendChild(disabledOptionsel);
+                options.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.text = option.name;
+                    optionElement.value = option.value;
+                    sel1.appendChild(optionElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error :', error);
+            })
+        var disabledOptionsel2 = document.createElement('option');
+        disabledOptionsel2.value = '';
+        disabledOptionsel2.selected = true;
+        disabledOptionsel2.setAttribute('disabled', 'disabled');
+        disabledOptionsel2.text = 'emails';
+        axios.get('/emlist', {
+
+        })
+            .then(response => {
+                const options = response.data;
+                sel2.innerHTML = '';
+                sel2.appendChild(disabledOptionsel2);
+                options.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.text = option.user_name;
+                    sel2.appendChild(optionElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error :', error);
+            })
+        del1.addEventListener('click', () => {
+            const name = sel1.options[sel1.selectedIndex].text;
+            const email = sel2.options[sel2.selectedIndex].text;
+            axios.get('/del', {
+                params: {
+                    name: name,
+                    email: email,
+                }
+            })
+                .then(response => {
+                    const options = response.data;
+                    document.getElementById('lab2').innerHTML = options.result1;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+    </script>
+</body>
+</html>
