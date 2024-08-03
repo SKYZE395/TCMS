@@ -1,0 +1,62 @@
+body{
+    background: url(pic3.jpg) center no-repeat;
+    height: 400px;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+
+
+h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #f1eded;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+ button, select {
+  padding: 8px 12px;
+  font-size: 16px;
+  margin-right: 10px;
+  background-color: #864f27;
+  color: #efeded;
+  border: none;
+  border-radius: 4px; 
+  cursor: pointer;
+  opacity: 95%;
+}
+  
+  form {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  div {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  #Sec {
+    margin-bottom: 10px;
+  }
+  
+  #Sec1 {
+    margin-bottom: 20px;
+  }
+  
+  #sections {
+    margin-right: 10px;
+  }
+  
+  #but {
+    margin-left: 10px;
+  }
+  
+  #fac_select {
+    margin-right: 10px;
+  }
+  

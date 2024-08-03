@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+    
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: "Jost", sans-serif;
+    background-size: cover;
+    background-image: url("pic4.jpg");
+    background-size: cover;
+   
+    border-top: 55px;
+    border-left: 10px;
+    border-right: 10px;
+    border-bottom: 10px;
+    border-color: black;
+    border-style: solid;
+   
+    
+    
+  }
+  
+  h2{
+    margin: 10px;
+    padding: 10px;
+  }
+  form{
+    margin-left: 20px;
+    
+  }
+  button{
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: rgb(201, 241, 255);
+}

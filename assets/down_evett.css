@@ -1,0 +1,52 @@
+/* Styling for the tt_logo class */
+.tt_logo2 {
+    width: 300px; /* Adjust the width as needed */
+    margin-left: 20px;
+  }
+  
+  /* Styling for the container class */
+  .container {
+    text-align: center;
+  }
+  
+  /* Styling for the topcontent class */
+  .topcontent {
+    margin-top: 20px; /* Adjust the margin as needed */
+  }
+  
+  /* Styling for the h1 tag within topcontent */
+  .topcontent h1 {
+    font-size: 24px; /* Adjust the font size as needed */
+  }
+  
+  /* Styling for the h2 tag within topcontent */
+  .topcontent h2 {
+    font-size: 36px; /* Adjust the font size as needed */
+  }
+  
+  /* Styling for the h3 tag within topcontent */
+  .topcontent h3 {
+    font-size: 20px; /* Adjust the font size as needed */
+  }
+  
+  /* Styling for the label tag with the id roomno */
+  #roomno {
+    font-weight: bold;
+    margin-left: 5px; /* Adjust the margin as needed */
+  }
+  
+  /* Styling for the h4 tag within topcontent */
+  .topcontent h4 {
+    font-size: 16px; /* Adjust the font size as needed */
+  }
+  
+  /* Styling for the p tag with the id section and name section */
+  #section[name="section"] {
+    font-weight: bold;
+  }
+  
+  /* Additional styling for the entire form layout */
+  p {
+    margin-bottom: 10px;
+  }
+  

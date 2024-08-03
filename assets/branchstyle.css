@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    padding: 0;
+    
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: "Jost", sans-serif;
+    background-size: cover;
+    background-image: url("pic3.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    border-left: 10px;
+    border-right: 10px;
+  }
+
+  h3{
+    margin-top: 10px;
+    padding: 10px;
+    top: 230px;
+  }
+
+  
